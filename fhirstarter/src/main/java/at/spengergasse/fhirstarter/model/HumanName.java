@@ -3,6 +3,7 @@ package at.spengergasse.fhirstarter.model;
 import ch.qos.logback.classic.joran.action.ContextNameAction;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "hn_human_name")
-@Builder
+@SuperBuilder
 public class HumanName extends Element {
     public enum StatusCode {usual, official, temp, nickname, anonymus, old, maiden}
 

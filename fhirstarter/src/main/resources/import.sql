@@ -1,3 +1,5 @@
+-- Diese Inserts funktionieren (Stand 12.09.2024)
+
 SET FOREIGN_KEY_CHECKS = 0;
 
 
@@ -27,14 +29,14 @@ INSERT INTO `fhirstarter`.`g_greeting` (`l`, `format`, `id`)VALUES(1, 'Hello, {n
 
 -- Inserts für hn_human_name
 INSERT INTO `fhirstarter`.`hn_human_name` (`hn_family`, `hn_pe_id`, hn_use, `hn_text`, `id`) VALUES ('Doe', '2022-01-01', 'official', 'John Doe', '1'), ('Smith', '2022-01-02', 'usual', 'Jane Smith', '2'), ('Johnson', '2022-01-03', 'maiden', 'Alice Johnson', '3');
--- Inserts für human_name_given
-INSERT INTO `fhirstarter`.`human_name_given` (`given`, `human_name_id`)VALUES('John', '1'),('Jane', '2'),('Alice', '3');
+-- Inserts für hn_gi_given
+INSERT INTO `fhirstarter`.`hn_gi_given` (`given`, `human_name_id`)VALUES('John', '1'),('Jane', '2'),('Alice', '3');
 
--- Inserts für human_name_prefix
-INSERT INTO `fhirstarter`.`human_name_prefix` (`human_name_id`, `pr     efix`)VALUES('1', 'Mr.'),('2', 'Ms.'),('3', 'Mrs.');
+-- Inserts für hn_pf_prefix
+INSERT INTO `fhirstarter`.`hn_pf_prefix` (`human_name_id`, `prefix`)VALUES('1', 'Mr.'),('2', 'Ms.'),('3', 'Mrs.');
 
--- Inserts für human_name_suffix
-INSERT INTO `fhirstarter`.`human_name_suffix` (`human_name_id`, `suffix`)VALUES('1', 'Jr.'),('2', 'II'),('3', 'Sr.');
+-- Inserts für hn_sf_suffix
+INSERT INTO `fhirstarter`.`hn_sf_suffix` (`human_name_id`, `suffix`)VALUES('1', 'Jr.'),('2', 'II'),('3', 'Sr.');
 
 -- Inserts für id_identifier
 INSERT INTO `fhirstarter`.`id_identifier` (`id_cc_id`, `id_pe_id`, `id_re_id`, `id_system`, `id_value`, `id`, `id_pa_id`, `id_use`) VALUES ('1', '1', '1', 'identifiertest', 'value odf identifier', '1', '1', 'old');
@@ -63,15 +65,15 @@ INSERT INTO `fhirstarter`.`id_identifier` (`id`, `id_pr_id`, `id_use`, `id_syste
 -- Inserts für hn_human_name
 INSERT INTO `fhirstarter`.`hn_human_name` (`id`, `hn_pr_id`, `hn_use`, `hn_family`) VALUES ('h005', 'f005', 'official', 'Anne');
 
--- Inserts für human_name_given
-INSERT INTO `fhirstarter`.`human_name_given` (`given`, `human_name_id`) VALUES ('Langeveld', 'h005');
+-- Inserts für hn_gi_given
+INSERT INTO `fhirstarter`.`hn_gi_given` (`given`, `human_name_id`) VALUES ('Langeveld', 'h005');
 
--- Inserts für human_name_suffix
-INSERT INTO `fhirstarter`.`human_name_suffix` (`human_name_id`, `suffix`) VALUES ('h005', 'MD');
+-- Inserts für hn_sf_suffix
+INSERT INTO `fhirstarter`.`hn_sf_suffix` (`human_name_id`, `suffix`) VALUES ('h005', 'MD');
 
-INSERT INTO `fhirstarter`.`human_name_prefix` (`human_name_id`, `prefix`) VALUES ('h005', 'Mrs.');
+INSERT INTO `fhirstarter`.`hn_pf_prefix` (`human_name_id`, `prefix`) VALUES ('h005', 'Mrs.');
 
-INSERT INTO `fhirstarter`.`human_name_prefix` (`human_name_id`, `prefix`) VALUES ('h005', 'Dr.');
+INSERT INTO `fhirstarter`.`hn_pf_prefix` (`human_name_id`, `prefix`) VALUES ('h005', 'Dr.');
 
 -- Inserts für cp_contatactpoint
 INSERT INTO `fhirstarter`.`cp_contactpoint` (`id`, `cp_pr_id`, `cp_systemcode`, `cp_value`, `cp_contactkind`) VALUES ('cp01', 'f005', 'phone', '0205563847', 'work'), ('cp02', 'f005', 'email', 'a.langeveld@bmc.nl', 'work'), ('cp03', 'f005', 'fax', '0205668916', 'work');
@@ -131,11 +133,11 @@ INSERT INTO `fhirstarter`.`id_identifier` (`id`, `id_pr_id`, `id_use`, `id_syste
 -- Inserts für hn_human_name
 INSERT INTO `fhirstarter`.`hn_human_name` (`id`, `hn_pr_id`, `hn_use`, `hn_family`) VALUES ('h006', 'f006', 'official', 'Müller');
 
--- Inserts für human_name_given
-INSERT INTO `fhirstarter`.`human_name_given` (`given`, `human_name_id`) VALUES ('Max', 'h006');
+-- Inserts für hn_gi_given
+INSERT INTO `fhirstarter`.`hn_gi_given` (`given`, `human_name_id`) VALUES ('Max', 'h006');
 
--- Inserts für human_name_suffix
-INSERT INTO `fhirstarter`.`human_name_suffix` (`human_name_id`, `suffix`) VALUES ('h006', 'MD');
+-- Inserts für hn_sf_suffix
+INSERT INTO `fhirstarter`.`hn_sf_suffix` (`human_name_id`, `suffix`) VALUES ('h006', 'MD');
 
 -- Inserts für cp_contatactpoint
 INSERT INTO `fhirstarter`.`cp_contactpoint` (`id`, `cp_pr_id`, `cp_systemcode`, `cp_value`, `cp_contactkind`) VALUES ('cp04', 'f006', 'phone', '0123456789', 'work'), ('cp05', 'f006', 'email', 'm.mueller@example.com', 'work'), ('cp06', 'f006', 'fax', '9876543210', 'work');
@@ -147,7 +149,7 @@ INSERT INTO `fhirstarter`.`ad_address` (`ad_pr_id`, `id`, `ad_usecode`, `ad_city
 INSERT INTO `fhirstarter`.`ad_line` (`address_id`, `line`) VALUES ('a006', 'Stephansplatz 1');
 
 -- Inserts für at_attachment
-INSERT INTO `fhirstarter`.`at_attachment` (`id`, `at_pr_id`, `at_content_type`, `at_data`) VALUES ('at02', 'f006', 'jpeg', '/aefdafasZ');
+INSERT INTO `fhirstarter`.`at_attachment` (`id`, `at_pr_id`, `at_content_type`, `at_data`) VALUES ('at03', 'f006', 'jpeg', '/aefdafasZ');
 
 -- Inserts für cc_codeableconcept
 INSERT INTO `fhirstarter`.`cc_codeableconcept` (`id`) VALUES ('PRHCC3'), ('PRHCC4');
@@ -172,5 +174,6 @@ INSERT INTO `fhirstarter`.`na_narrative` (`id`, `na_div`, `na_status`)VALUES('na
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+-- ENDE Stand (12.09.2024)
 
-SET FOREIGN_KEY_CHECKS = 1;
+

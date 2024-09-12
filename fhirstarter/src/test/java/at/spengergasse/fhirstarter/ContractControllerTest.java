@@ -2,7 +2,7 @@ package at.spengergasse.fhirstarter;
 
 import at.spengergasse.fhirstarter.model.Contract;
 import at.spengergasse.fhirstarter.model.GenderCode;
-import at.spengergasse.fhirstarter.model.Organization;
+//import at.spengergasse.fhirstarter.model.Organization;
 import at.spengergasse.fhirstarter.repository.ContractRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

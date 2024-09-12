@@ -18,6 +18,9 @@ import java.util.List;
 @Builder
 public class Patient extends DomainResource {
 
+    //TODO: at_attachement hat keinen Schlüssel zu Patient
+
+
     //diese Spalte wird in id_identifier erzeugt (obwohls hier geschrieben wird)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_pa_id")
@@ -53,7 +56,7 @@ public class Patient extends DomainResource {
     private List<Address> address;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "at_pa_id", columnDefinition="BLOB")
+    @JoinColumn(name = "at_pa_id")
     private List<Attachment> photo;
 
     @OneToMany(cascade =CascadeType.ALL)

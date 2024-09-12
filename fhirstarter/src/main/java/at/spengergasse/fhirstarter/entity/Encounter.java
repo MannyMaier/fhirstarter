@@ -1,7 +1,6 @@
 package at.spengergasse.fhirstarter.entity;
 
-import at.spengergasse.fhirstarter.model.DomainResource;
-import at.spengergasse.fhirstarter.model.Identifier;
+import at.spengergasse.fhirstarter.model.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,4 +31,36 @@ public class Encounter extends DomainResource {
     @Enumerated(EnumType.STRING)
     @Column(name = "en_status")
     private Statuscode status;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sh_en_id")
+    private List<StatusHistory> statusHistory;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cc_en_id")
+    private List<CodeableConcept> type;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "en_subject_re_id", referencedColumnName = "id")
+    private Reference subject;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "en_episodeofcare_re_id", referencedColumnName = "id")
+    private Reference episodeOfCare;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "en_appointment_re_id", referencedColumnName = "id")
+    private Reference appointment;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "en_pe_id")
+    private Period period;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "en_reasonreference_re_id", referencedColumnName = "id")
+    private Reference reasonReference;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "en_partof_re_id", referencedColumnName = "id")
+    private Reference partOf;
 }
