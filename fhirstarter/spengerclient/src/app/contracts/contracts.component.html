@@ -1,0 +1,14 @@
+<p>contracts works!</p>
+<table class="table">
+    <tr>
+        <th>ContractId</th>
+        <th>Version</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let contract of contractArr$" (click)="selectContract(contract)">
+        <td>{{contract.id}}</td>
+        <td>{{contract.version}}</td>
+        <td>{{contract.status}}</td>
+    </tr>
+</table>

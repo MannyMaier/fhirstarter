@@ -1,0 +1,93 @@
+<ul class="list-group">
+    <li class="list-group-item">
+        <h3>Names</h3>
+        <button (click)="addName()" type="button" class="btn btn-success">
+            Namen hinzufügen
+        </button>
+        <p></p>
+        <ul>
+            <li *ngFor="let name of practitioner?.name; let nameIndex = index">
+
+                <div>
+                    <div *ngFor="let p of name.prefix; let i = index; trackBy: trackByFn">
+
+                        Prefix: <input [(ngModel)]="name.prefix[i]" type="text">
+
+                        <button (click)="addPrefix(name)" class="btn btn-success">Prefix hinzufügen</button>
+                        <button (click)="deletePrefix(name, i)" class="btn btn-danger">Prefix löschen</button>
+                    </div>
+                    <div *ngFor="let g of name.given; let i = index; trackBy: trackByFn">
+
+                        Given: <input [(ngModel)]="name.given[i]" type="text">
+
+                        <button (click)="addGiven(name)" class="btn btn-success">Given hinzufügen</button>
+                        <button (click)="deleteGiven(name, i)" class="btn btn-danger">Given löschen</button>
+
+                    </div>
+                    <div *ngFor="let s of name.suffix; let i = index; trackBy: trackByFn">
+                        Suffix: <input [(ngModel)]="name.suffix[i]" type="text">
+
+                        <button (click)="addSuffix(name)" class="btn btn-success">Suffix hinzufügen</button>
+                        <button (click)="deleteSuffix(name, i)" class="btn btn-danger">Suffix löschen</button>
+                    </div>
+                    <p></p>
+                    <div>
+                        Family: <input [(ngModel)]="name.family" type="text">
+                    </div>
+                    <p></p>
+                    <div>
+                        Text: <input [(ngModel)]="name.text" type="text">
+                    </div>
+                </div>
+                <p></p>
+                <button (click)="deleteName(name)" class="btn btn-danger">Namen löschen</button>
+                <p></p>
+            </li>
+        </ul>
+
+
+
+    </li>
+    <li class="list-group-item">
+        Birth date: <input [(ngModel)]="practitioner.birthDate" type="date">
+    </li>
+
+
+
+
+
+    <li class="list-group-item">
+        <h3>Qualifications</h3>
+        <button (click)="addQualification()" type="button" class="btn btn-success">
+            Qualifikation hinzufügen
+        </button>
+        <p></p>
+        <ul>
+            <li *ngFor="let qualification of practitioner?.qualification; let i = index">
+                <p>Code: <input [(ngModel)]="qualification.code.text" type="text"></p>
+                <p>Period Start: <input [(ngModel)]="qualification.period.start" type="datetime-local"></p>
+                <p>Period End: <input [(ngModel)]="qualification.period.end" type="datetime-local"></p>
+                <button (click)="deleteQualification(i)" type="button" class="btn btn-danger">
+                    Qualifikation löschen
+                </button>
+                <p></p>
+            </li>
+        </ul>
+    </li>
+
+
+
+    <li class="list-group-item">
+        <label> Active <input [(ngModel)]="practitioner.active" type="checkbox"> </label>
+
+    </li>
+
+    <li *ngFor="let attachment of practitioner?.photo" class="list-group-item">
+        <img *ngIf="attachment?.data" [src]="'data:image/jpeg;base64,' + attachment?.data" alt="Practitioner Photo">
+    </li>
+</ul>
+
+<div>
+    <button (click)="deletePractitioner()" type="button" class="btn btn-danger">Practitioner löschen</button>
+    <button (click)="updatePractitioner()" type="button" class="btn btn-warning">Änderungen speichern</button>
+</div>

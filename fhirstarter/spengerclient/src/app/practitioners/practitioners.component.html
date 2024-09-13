@@ -1,0 +1,41 @@
+<table class="table">
+    <tr>
+        <th>PractitionerId</th>
+        <th>Name</th>
+        <th>Birthdate</th>
+        <!-- <th>Identifier</th> -->
+        <th></th>
+    </tr>
+    <tr *ngFor="let practitioner of practitionerArr$" (click)="selectPractitioner(practitioner)">
+        <td>{{practitioner.id}}</td>
+        <td>
+            <div *ngFor="let name of practitioner?.name">
+                <p>
+                    <span *ngFor="let p of name.prefix">{{p}} </span>
+                    <span *ngFor="let g of name.given">{{g}} </span>
+                    {{name.family}}
+                    <span *ngFor="let s of name.suffix">{{s}} </span>
+                  </p>
+                  
+            </div>
+        </td>
+        <td>
+            {{practitioner.birthDate}}
+        </td>
+        <!-- <td>
+            <p *ngFor='let identifier of practitioner.identifier'>{{identifier?.value}}</p>
+        </td> -->
+    </tr>
+</table>
+<button (click)="createPractitioner()" type="button" class="btn btn-success">Neuen Practitioner anlegen</button>
+<!-- Wird nur angezeigt, wenn selectedPractitioner gesetzt ist und auch eine id hat -->
+<div *ngIf="(selectedPractitioner?.id != '')">
+    <p> </p>
+    <h2>ID: {{selectedPractitioner.id}}</h2>
+    <p> </p>
+    <!--
+    Die Practitioner Component, bekommt mit [id] die id vom ausgewählten Practitioner aus der Liste
+    und liefert einen Event zurück, wenn der Practitioner editiert wurde
+    selectedPractitioner.id! ! => Promise, dass es nicht null ist -->
+    <app-practitioner [id]="selectedPractitioner.id!" (practitionerModified)="onPractitionerModified($event)"></app-practitioner>
+</div>
