@@ -34,11 +34,11 @@ public class Encounter extends DomainResource {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "sh_en_id")
-    private List<StatusHistory> statusHistory;
+    private List<StatusHistory> statusHistory = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "cc_en_id")
-    private List<CodeableConcept> type;
+    private List<CodeableConcept> type  = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "en_subject_re_id", referencedColumnName = "id")

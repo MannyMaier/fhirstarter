@@ -1,6 +1,6 @@
 {
-  "name": "spengerclient",
-  "version": "0.0.0",
+  "name": "package",
+  "version": "20.12.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -35,5 +35,12 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.4.2"
-  }
+  },
+  "description": "spengerclientdesrcrition",
+  "main": "index.js",
+  "keywords": [
+    "spengerclient"
+  ],
+  "author": "Manny",
+  "license": "ISC"
 }
