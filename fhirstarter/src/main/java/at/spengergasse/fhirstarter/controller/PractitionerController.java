@@ -11,7 +11,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(path = "/api/practitioner")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class PractitionerController {
 
     @Autowired

@@ -8,6 +8,8 @@ import { PractitionerComponent } from "./practitioner/practitioner.component";
 import { NgModule } from '@angular/core';
 import { PractitionersComponent } from "./practitioners/practitioners.component";
 import { ContractsComponent } from "./contracts/contracts.component";
+import {EncounterComponent} from "./encounter/encounter.component";
+import {EncountersComponent} from "./encounters/encounters.component";
 
 
 export const routes: Routes = [
@@ -30,6 +32,11 @@ export const routes: Routes = [
     path: "contracts",
     title: "Contracts",
     component: ContractsComponent,
+  },
+  {
+    path: "encounters",
+    title: "Encounters",
+    component: EncountersComponent,
   }
 ];
 
