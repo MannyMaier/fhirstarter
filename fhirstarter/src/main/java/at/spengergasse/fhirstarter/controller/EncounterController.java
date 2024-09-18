@@ -11,15 +11,15 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/encounter")
-@CrossOrigin(origins = "http://localhost:4200")
 public class EncounterController {
 
     @Autowired
     private EncounterRepository encounterRepository;
 
-    @GetMapping
+    @GetMapping("/")
     public Iterable<Encounter> getAllEncounters() {
         return encounterRepository.findAll();
     }

@@ -20,12 +20,18 @@ export class DataService {
 
   //#region  Patient methods
   public getPatients(): Observable<Patient[]> {
+
+    console.log("GET PATIENTS");
+
     return this.http
       .get<Patient[]>(this.patientUrl)
       .pipe(catchError(this.handleError("getPatients", [])));
   }
 
   public getPatient(id: string): Observable<Patient> {
+
+    console.log("1 GET PATIENT");
+
     return this.http
       .get<Patient>(this.patientUrl + id)
       .pipe(catchError(this.handleError("getPatientDetail", new Patient())));
@@ -106,12 +112,18 @@ export class DataService {
 
   //#region Encounters methods
   public getEncounters(): Observable<Encounter[]> {
+
+    console.log("GET Encounters");
+
     return this.http
       .get<Encounter[]>(this.encounterUrl)
       .pipe(catchError(this.handleError("getEncounters", [])));
   }
 
   public getEncounter(id: string): Observable<Encounter> {
+
+    console.log("GET 1 Encounter");
+
     return this.http
       .get<Encounter>(this.encounterUrl + id)
       .pipe(catchError(this.handleError("getEncounter", new Encounter())));
