@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Attachment  extends Element{
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "at_contentType")
+    @Column(name = "at_contentType", length = 50)
     private MimeType contentType;
 
     @Enumerated(EnumType.STRING)

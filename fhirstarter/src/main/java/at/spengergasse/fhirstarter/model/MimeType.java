@@ -2,8 +2,44 @@ package at.spengergasse.fhirstarter.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public enum MimeType {@JsonProperty("image/jpeg")jpeg}
-   /* aac(".aac", "audio/aac"),
+public enum MimeType {
+    @JsonProperty("application/pdf") PDF,
+    @JsonProperty("application/vnd.openxmlformats-officedocument.wordprocessingml.document") DOCX,
+    @JsonProperty("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") XLSX,
+    @JsonProperty("image/png") PNG,
+    @JsonProperty("image/jpeg") JPEG,
+    @JsonProperty("image/jpg") JPG,
+    @JsonProperty("image/gif") GIF,
+    @JsonProperty("audio/mpeg") MP3,
+    @JsonProperty("audio/wav") WAV,
+    @JsonProperty("video/mp4") MP4,
+    @JsonProperty("video/x-msvideo") AVI,
+    @JsonProperty("application/zip") ZIP,
+    @JsonProperty("application/x-rar-compressed") RAR,
+    @JsonProperty("application/json") JSON,
+    @JsonProperty("text/plain") TXT,
+    @JsonProperty("text/html") HTML,
+    @JsonProperty("application/xml") XML,
+    @JsonProperty("application/vnd.ms-powerpoint") PPT,
+    @JsonProperty("application/vnd.openxmlformats-officedocument.presentationml.presentation") PPTX,
+    @JsonProperty("application/x-7z-compressed") SEVEN_Z,
+    @JsonProperty("application/x-tar") TAR
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* aac(".aac", "audio/aac"),
     abw(".abw", "application/x-abiword"),
     apng(".apng", "image/apng"),
     arc(".arc", "application/x-freearc"),
