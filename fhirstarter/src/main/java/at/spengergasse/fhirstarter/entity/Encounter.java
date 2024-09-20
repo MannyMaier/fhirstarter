@@ -48,9 +48,9 @@ public class Encounter extends DomainResource {
     @JoinColumn(name = "en_episodeofcare_re_id", referencedColumnName = "id")
     private Reference episodeOfCare;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "en_appointment_re_id", referencedColumnName = "id")
-    private Reference appointment;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "re_en_id")
+    private List<Reference> appointment = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "en_pe_id")
@@ -59,6 +59,10 @@ public class Encounter extends DomainResource {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "en_reasonreference_re_id", referencedColumnName = "id")
     private Reference reasonReference;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "di_en_id")
+    private List<Diagnosis> diagnosis  = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "en_partof_re_id", referencedColumnName = "id")

@@ -190,7 +190,10 @@ INSERT INTO `na_narrative` (`id`, `na_div`, `na_status`) VALUES ('f201', '<div x
 INSERT INTO `id_identifier` (`id`, `id_use`, `id_value`) VALUES ('f201', 'temp', 'Encounter_Roel_20130404');
 
 -- Das ist der Encounter
-INSERT INTO `en_encounter` (`id`, `dr_na_id`, `en_appointment_re_id`, `en_episodeofcare_re_id`, `en_partof_re_id`, `en_pe_id`, `en_reasonreference_re_id`, `en_subject_re_id`, `en_status`) VALUES ('f201', 'f201', NULL, NULL, 'f203', NULL, NULL, 'f201', 'finished');
+INSERT INTO `en_encounter` (`id`, `dr_na_id`, `en_episodeofcare_re_id`, `en_partof_re_id`, `en_pe_id`, `en_reasonreference_re_id`, `en_subject_re_id`, `en_status`) VALUES ('f201', 'f201',  NULL, 'f203', NULL, NULL, 'f201', 'finished');
+
+-- Appointment für den Encounter
+INSERT INTO `re_reference` (`id`, `re_en_id`, `re_reference`) VALUES ('f202', 'f201', 'Appointment/example');
 
 -- Statusverlauf des Encounters
 INSERT INTO `sh_statushistory` (`id`, `sh_en_id`, `sh_pe_id`, `sh_status`) VALUES ('f201', 'f201', 'f201', 'in_progress');
