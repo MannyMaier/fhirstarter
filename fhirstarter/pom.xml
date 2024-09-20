@@ -151,7 +151,7 @@
                             <resources>
                                 <resource>
                                     <!-- Anpassen, Pfad vom Client angeben. Kann probeweise mit ng build angelegt werden. -->
-                                    <directory>spengerclient\dist\spengerclient</directory>
+                                    <directory>spengerclient\dist\spengerclient\browser</directory>
                                 </resource>
                             </resources>
                         </configuration>
