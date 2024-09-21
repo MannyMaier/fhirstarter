@@ -108,9 +108,9 @@ export class EncounterComponent implements OnInit {
       type: [
         new CodeableConcept(
           [
-            new Coding('http://example.com/system', '1.0', 'example-code', 'Example Display', false)
+            new Coding('', '', '', '', false)
           ],
-          'Example Codeable Concept'
+          ''
         ),
       ],
       period: new Period(/* setze start und end hier */),

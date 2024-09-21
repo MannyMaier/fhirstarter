@@ -56,7 +56,7 @@
             <div *ngFor="let type of participant.type; let j = index">
               <li>
                 <input [(ngModel)]="type.text" placeholder="Typ eingeben" />
-                <button (click)="removeType(i, j)">Entfernen</button>
+                <button (click)="removeType(i, j)" class="btn btn-danger">Entfernen</button>
               </li>
             </div>
             <p></p>
