@@ -198,6 +198,8 @@ INSERT INTO `re_reference` (`id`, `re_en_id`, `re_reference`) VALUES ('f202', 'f
 -- Statusverlauf des Encounters
 INSERT INTO `sh_statushistory` (`id`, `sh_en_id`, `sh_pe_id`, `sh_status`) VALUES ('f201', 'f201', 'f201', 'in_progress');
 
+INSERT INTO `pe_period` (`id`, `pe_start`) VALUES ('f201', '2013-03-08 00:00:00');
+
 -- Teilnehmer am Encounter
 INSERT INTO `pp_participant` (`id`, `pp_individual_re_id`, `pp_pe_id`) VALUES ('f201', 'f201', NULL);
 

@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 public class EncounterRepositoryTest {
@@ -44,24 +45,35 @@ public class EncounterRepositoryTest {
     @Test
     public void saveAndUpdateOneEncounter(){
 
-        //Man darf keine Id angeben!
-
+        // Man darf keine Id angeben!
         Encounter e = returnOneEncounterJSON(resourceLoader, om);
-        Encounter savedE = encounterRepository.save(e);
-        Encounter loadedEncounter = encounterRepository.findById(savedE.getId()).get();
 
+        // Speichern des neuen Encounter
+        Encounter savedE = encounterRepository.save(e);
+
+        // Sicherstellen, dass die ID existiert
+        assertNotNull(savedE.getId(), "Encounter ID sollte nicht null sein!");
+
+        // Laden des gespeicherten Encounter
+        Encounter loadedEncounter = encounterRepository.findById(savedE.getId())
+                .orElseThrow(() -> new RuntimeException("Encounter nicht gefunden!"));
+
+        // Status aktualisieren
         e.setStatus(Encounter.Statuscode.cancelled);
 
+        // Speichern der aktualisierten Encounter
         Encounter updatedE = encounterRepository.save(e);
 
-        loadedEncounter = encounterRepository.findById(e.getId()).get();
+        // Laden des aktualisierten Encounter
+        loadedEncounter = encounterRepository.findById(updatedE.getId())
+                .orElseThrow(() -> new RuntimeException("Aktualisierter Encounter nicht gefunden!"));
 
+        // Vergleich der geladenen und der aktualisierten Entität
         assertThat(loadedEncounter)
                 .usingRecursiveComparison()
                 .ignoringCollectionOrder()
                 .ignoringFieldsMatchingRegexes(".*id")
-                .ignoringFields("id")
-                .isEqualTo(e);
+                .isEqualTo(updatedE);
     }
 
     @Test
