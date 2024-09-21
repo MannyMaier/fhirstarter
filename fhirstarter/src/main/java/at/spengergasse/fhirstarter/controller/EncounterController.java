@@ -52,7 +52,7 @@ public class EncounterController {
             encounter.setPartOf(encounterDetails.getPartOf());
             encounter.setParticipant(encounterDetails.getParticipant());
             encounter.setDiagnosis(encounterDetails.getDiagnosis());
-            
+
             Encounter updatedEncounter = encounterRepository.save(encounter);
             return ResponseEntity.ok(updatedEncounter);
         }).orElseGet(() -> createEncounter(encounterDetails));
