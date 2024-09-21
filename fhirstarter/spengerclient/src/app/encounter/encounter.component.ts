@@ -1,33 +1,23 @@
-import { CommonModule } from "@angular/common";
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  OnChanges,
-} from "@angular/core";
-import { DataService } from "../data.service";
-import { Encounter } from "../models/Encounter";
-import { FormsModule } from "@angular/forms";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Encounter, Diagnosis, Participant, Period, Reference, Identifier, EncounterStatus, CodeableConcept, Coding } from '../models/Encounter';
+import { DataService } from '../data.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: "app-encounter",
+  selector: 'app-encounter',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: "./encounter.component.html",
-  styleUrls: ["./encounter.component.scss"],
+  imports: [CommonModule, FormsModule], // Stelle sicher, dass FormsModule hier importiert ist
+  templateUrl: './encounter.component.html',
+  styleUrls: ['./encounter.component.scss'],
 })
-export class EncounterComponent implements OnInit, OnChanges {
-  constructor(private service: DataService) {}
-
-  @Input()
-  id: string = "";
-
-  @Output()
-  encounterModified = new EventEmitter<boolean>();
+export class EncounterComponent implements OnInit {
+  @Input() id: string = '';
+  @Output() encounterModified = new EventEmitter<boolean>();
 
   encounter: Encounter = new Encounter();
+
+  constructor(private service: DataService) {}
 
   ngOnInit(): void {
     this.getEncounter();
@@ -39,91 +29,116 @@ export class EncounterComponent implements OnInit, OnChanges {
 
   getEncounter() {
     this.service.getEncounter(this.id).subscribe((data: Encounter) => {
-      console.log(data);
       this.encounter = data;
+
+      console.log('Encounter:', this.encounter);
+
+      if (!this.encounter.period) {
+        this.encounter.period = new Period('', '');
+        console.log(this.encounter.period) // Stelle sicher, dass period initialisiert wird
+      }
     });
   }
 
   deleteEncounter() {
-    this.service
-      .deleteEncounter(this.encounter.id!) //! => Promise, dass es nicht null ist.
-      .subscribe((x) => this.encounterModified.emit(true));
+    this.service.deleteEncounter(this.encounter.id!).subscribe(() => {
+      this.encounterModified.emit(true);
+    });
   }
 
   updateEncounter() {
-    var newEncounter: Encounter = this.encounter;
-    this.service
-      .updateEncounter(newEncounter)
-      .subscribe((encounter) => {
-        console.log("Encounter aktualisiert");
-        this.encounter = encounter;
-        this.encounterModified.emit(false);
-      });
-  }
-
-  addStatus() {
-    this.encounter.status = "planned";
-    console.log(this.encounter.status);
-  }
-
-  get periodStart() {
-    return this.encounter.period?.start || '';
-  }
-
-  set periodStart(value: string) {
     if (this.encounter.period) {
-      this.encounter.period.start = value;
+        // Verwende die bestehende Periode
+        this.encounter.period = new Period(this.encounter.period.start, this.encounter.period.end);
     } else {
-      this.encounter.period = { start: value, end: '' };
+        // Setze eine neue Periode, falls keine existiert
+        this.encounter.period = new Period('2024-01-01T00:00:00Z', '2024-12-31T23:59:59Z');
     }
+    
+    this.service.updateEncounter(this.encounter).subscribe(
+        (updatedEncounter) => {
+            console.log("Encounter updated", updatedEncounter);
+            this.encounter = updatedEncounter;
+            this.encounterModified.emit(false);
+        },
+        (error) => {
+            console.error('Error updating encounter:', error);
+        }
+    );
+}
+
+
+   /* updateEncounter() {
+
+     // Stelle sicher, dass die Period-Instanz korrekt ist
+     if (!this.encounter.period) {
+         this.encounter.period = new Period(/* setze hier die Werte für start und end );
+     }
+     console.log('E:', this.encounter);
+
+
+     this.service.updateEncounter(this.encounter).subscribe(
+         () => {
+             console.log('Encounter updated');
+             console.log('EncounterU:', this.encounter);
+             this.encounterModified.emit(false);
+         },
+         (error) => {
+             console.error('Error updating encounter:', error);
+         }
+     );
+ }  
+     */
+
+
+  addDiagnosis() {
+    this.encounter.diagnosis.push(new Diagnosis());
   }
 
-  get periodEnd() {
-    return this.encounter.period?.end || '';
+  deleteDiagnosis(index: number) {
+    this.encounter.diagnosis.splice(index, 1);
   }
 
-  set periodEnd(value: string) {
-    if (this.encounter.period) {
-      this.encounter.period.end = value;
-    } else {
-      this.encounter.period = { start: '', end: value };
+  addParticipant() {
+    if (!this.encounter.participant) {
+      this.encounter.participant = []; // Initialisiere das Array, falls es undefined ist
     }
+  
+    const newParticipant: Participant = {
+      type: [
+        new CodeableConcept(
+          [
+            new Coding('http://example.com/system', '1.0', 'example-code', 'Example Display', false)
+          ],
+          'Example Codeable Concept'
+        ),
+      ],
+      period: new Period(/* setze start und end hier */),
+      individual: new Reference('', '', new Identifier('identifier_value')),
+    };
+  
+    this.encounter.participant.push(newParticipant);
+  }
+  
+  
+
+  deleteParticipant(index: number) {
+    this.encounter.participant.splice(index, 1);
   }
 
-  get typeText() {
-    return this.encounter.type?.[0]?.text || '';
+  getStatusValues(): string[] {
+    return Object.values(EncounterStatus);
   }
 
-  set typeText(value: string) {
-    if (this.encounter.type && this.encounter.type[0]) {
-      this.encounter.type[0].text = value;
-    } else {
-      this.encounter.type = [{ text: value }];
-    }
+   
+  addType(participantIndex: number) {
+    const newType = new CodeableConcept([], ''); // Neue CodeableConcept instanz
+    this.encounter.participant[participantIndex].type.push(newType);
   }
-
-  get diagnosisText() {
-    return this.encounter.diagnosis?.[0]?.condition?.text || '';
+  
+  removeType(participantIndex: number, typeIndex: number) {
+    this.encounter.participant[participantIndex].type.splice(typeIndex, 1);
   }
-
-  set diagnosisText(value: string) {
-    if (this.encounter.diagnosis && this.encounter.diagnosis[0] && this.encounter.diagnosis[0].condition) {
-      this.encounter.diagnosis[0].condition.text = value;
-    } else {
-      this.encounter.diagnosis = [{ condition: { text: value } }];
-    }
-  }
-
-  get individual() {
-    return this.encounter.participant?.[0]?.individual?.display || '';
-  }
-
-  set individual(value: string) {
-    if (this.encounter.participant && this.encounter.participant[0] && this.encounter.participant[0].individual) {
-      this.encounter.participant[0].individual.display = value;
-    } else {
-      this.encounter.participant = [{ individual: { display: value } }];
-    }
-    }
+  
 
 }

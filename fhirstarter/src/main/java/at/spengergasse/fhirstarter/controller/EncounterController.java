@@ -50,8 +50,9 @@ public class EncounterController {
             encounter.setPeriod(encounterDetails.getPeriod());
             encounter.setReasonReference(encounterDetails.getReasonReference());
             encounter.setPartOf(encounterDetails.getPartOf());
-
-
+            encounter.setParticipant(encounterDetails.getParticipant());
+            encounter.setDiagnosis(encounterDetails.getDiagnosis());
+            
             Encounter updatedEncounter = encounterRepository.save(encounter);
             return ResponseEntity.ok(updatedEncounter);
         }).orElseGet(() -> createEncounter(encounterDetails));

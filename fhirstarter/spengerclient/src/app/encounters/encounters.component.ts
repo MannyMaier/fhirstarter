@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { Encounter } from '../models/Encounter';
+import { Encounter, Identifier } from '../models/Encounter';
 import { CommonModule } from '@angular/common';
-import { EncounterComponent } from '../encounter/encounter.component'; // import the EncounterComponent
+import { EncounterComponent } from '../encounter/encounter.component';
 
 @Component({
   selector: 'app-encounters',
@@ -14,7 +14,8 @@ import { EncounterComponent } from '../encounter/encounter.component'; // import
 export class EncountersComponent implements OnInit {
   constructor(private service: DataService) { }
 
-  encounters: Encounter[] = [];
+  // Verwende encounterArr$ für Konsistenz mit Practitioner
+  encounterArr$: Encounter[] = [];
   selectedEncounter: Encounter = new Encounter();
 
   ngOnInit(): void {
@@ -24,7 +25,7 @@ export class EncountersComponent implements OnInit {
   getEncounters() {
     this.service.getEncounters().subscribe((data: Encounter[]) => {
       console.log(data);
-      this.encounters = data;
+      this.encounterArr$ = data;
     });
   }
 
@@ -44,7 +45,13 @@ export class EncountersComponent implements OnInit {
   createEncounter() {
     var newEncounter: Encounter = new Encounter();
 
-    // Add any necessary initialization for the new Encounter here
+    // Erstellen Sie ein neues Identifier-Objekt
+    var newIdentifier: Identifier = new Identifier('Ihre ID hier');
+
+    // Fügen Sie das Identifier-Objekt zur identifier-Liste des Encounters hinzu
+    newEncounter.identifier = [newIdentifier];
+
+    // Fügen Sie ggf. weitere Initialisierungen für den neuen Encounter hinzu
 
     this.service.addEncounter(newEncounter).subscribe((encounter) => {
       console.log("Encounter created");

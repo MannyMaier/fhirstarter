@@ -1,51 +1,83 @@
 export class Encounter {
-  id?: string;
-  status?: string;
-  period?: Period;
-  type?: CodeableConcept[];
-  diagnosis?: Diagnosis[];
-  participant?: Participant[];
+  constructor(
+    public id: string = '',
+    public status: EncounterStatus = EncounterStatus.Planned,
+    public period: Period = new Period('', ''),
+    public type: Array<CodeableConcept> = [],
+    public diagnosis: Array<Diagnosis> = [],
+    public participant: Array<Participant> = [],
+    public identifier: Array<Identifier> = [],
+    public appointment: Array<Reference> = [],
+    public subject: Reference = new Reference(),
+    public episodeOfCare: Reference = new Reference(),
+    public reasonReference: Reference = new Reference(),
+    public partOf: Reference = new Reference(),    
+  ) {}
 }
 
 export class Period {
-  start?: string;
-  end?: string;
+  constructor(
+    public start: string = '',
+    public end: string = ''
+  ) {}
 }
 
 export class CodeableConcept {
-  coding?: Coding[];
-  text?: string;
+  constructor(
+    public coding: Array<Coding> = [],
+    public text: string = ''
+  ) {}
 }
 
 export class Coding {
-  system?: string;
-  code?: string;
-  display?: string;
+  constructor(
+    public system: string = '',
+    public version: string = '',
+    public code: string = '',
+    public display: string = '',
+    public userSelected: boolean = false
+  ) {}
 }
 
 export class Diagnosis {
-  condition?: CodeableConcept;
-  rank?: number;
+  constructor(
+    public condition: Reference = new Reference(),
+    public use: CodeableConcept = new CodeableConcept(),
+    public rank: number = 0
+  ) {}
 }
 
+
 export class Participant {
-  type?: CodeableConcept[];
-  period?: Period;
-  individual?: Reference;
+  constructor(
+    public type: Array<CodeableConcept> = [],
+    public period: Period = new Period(),
+    public individual: Reference = new Reference()
+  ) {}
 }
 
 export class Reference {
-  reference?: string;
-  type?: string;
-  identifier?: Identifier;
-  display?: string;
+  constructor(
+    public reference: string = '',
+    public type: string = '',
+    public identifier: Identifier = new Identifier(),
+    public display: string = ''
+  ) {}
 }
 
 export class Identifier {
-  use?: string;
-  type?: CodeableConcept;
-  system?: string;
-  value?: string;
-  period?: Period;
-  assigner?: Reference;
+  constructor(
+    public value: string = ''
+) {}
 }
+
+export enum EncounterStatus {
+  Planned = 'planned',
+  Arrived = 'arrived',
+  Triaged = 'triaged',
+  InProgress = 'in-progress',
+  OnLeave = 'onleave',
+  Finished = 'finished',
+  Cancelled = 'cancelled'
+}
+

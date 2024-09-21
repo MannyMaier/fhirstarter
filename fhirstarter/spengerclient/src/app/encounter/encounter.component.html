@@ -1,4 +1,89 @@
-<p>encounter works!</p>
-<div>
-  <h2>Encounter Details</h2>
-</div>
+<ul class="list-group">
+  <li class="list-group-item">
+    <h3>Status</h3>
+    <select [(ngModel)]="encounter.status">
+      <option *ngFor="let status of getStatusValues()" [value]="status">{{ status }}</option>
+    </select>
+  </li>
+
+  <li class="list-group-item">
+    <div>
+      <h3>Periode</h3>
+      <label>Start: </label>
+      <input [(ngModel)]="encounter.period.start" type="datetime-local">
+      <p></p>
+      <label>Ende: </label>
+      <input [(ngModel)]="encounter.period.end" type="datetime-local">
+
+    </div>
+
+  </li>
+
+
+  <li class="list-group-item">
+    <div>
+      <h3>Diagnosen hinzufügen</h3>
+      <button (click)="addDiagnosis()" class="btn btn-success">Diagnose hinzufügen</button>
+      <p></p>
+      <ul>
+        <li *ngFor="let diagnosis of encounter.diagnosis">
+          <div>
+            Condition Reference: <input [(ngModel)]="diagnosis.condition.reference" type="text" placeholder="Referenz">
+            <input [(ngModel)]="diagnosis.condition.type" type="text" placeholder="type">
+            <input [(ngModel)]="diagnosis.condition.display" type="text" placeholder="display">
+          </div>
+          <div>
+            Rank: <input [(ngModel)]="diagnosis.rank" type="number" min="0">
+            <p></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="list-group-item">
+    <div>
+      <h3>Participant hinzufügen</h3>
+      <button (click)="addParticipant()" class="btn btn-success">Teilnehmer hinzufügen</button>
+      <ul>
+        <li *ngFor="let participant of encounter.participant">
+          <div>
+            <p></p>
+            Types:
+            <p></p>
+            <div *ngFor="let participant of encounter.participant; let i = index">
+              
+              <li *ngFor="let type of participant.type; let j = index">
+                <input [(ngModel)]="type.text" placeholder="Typ eingeben" />
+                <button (click)="removeType(i, j)">Entfernen</button>
+              </li>
+              <p></p>
+              <button (click)="addType(i)" class="btn btn-success">Neuen Typ hinzufügen</button>
+              <p></p>
+            </div>
+            
+            
+
+            <div>
+              Period Start: <input [(ngModel)]="participant.period.start" type="datetime-local">
+              Period End: <input [(ngModel)]="participant.period.end" type="datetime-local">
+            </div>
+            <p></p>
+            <div>
+              Individual Reference: <input [(ngModel)]="participant.individual.reference" type="text"
+                placeholder="Referenz">
+              <input [(ngModel)]="participant.individual.type" type="text" placeholder="Typ">
+              <input [(ngModel)]="participant.individual.display" type="text" placeholder="Anzeige">
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </li>
+
+  <li class="list-group-item">
+    <button (click)="deleteEncounter()" type="button" class="btn btn-danger">Encounter löschen</button>
+    <button (click)="updateEncounter()" type="button" class="btn btn-warning">Änderungen speichern</button>
+  </li>
+</ul>

@@ -1,25 +1,22 @@
-<p>encounters works!</p>
-<div>
-  <table class="table">
-    <tr>
-      <th>EncounterId</th>
-      <th>Status</th>
-    </tr>
-    <tr (click)="selectEncounter(encounter)" *ngFor="let encounter of encounters">
-      <td>{{ encounter.id }}</td>
-      <td>{{ encounter.status }}</td>
-    </tr>
-  </table>
-  <button (click)="createEncounter()" class="btn btn-success" type="button">Neuen Encounter anlegen</button>
-  <!-- Wird nur angezeigt, wenn selectedEncounter gesetzt ist und auch eine id hat -->
-  <div *ngIf="(selectedEncounter?.id != '')">
-    <p></p>
-    <h2>ID: {{ selectedEncounter.id }}</h2>
-    <p>Status: {{ selectedEncounter.status }}</p>
-    <!--
-    Die Encounter Component, bekommt mit [id] die id vom ausgewählten Encounter aus der Liste
-    und liefert einen Event zurück, wenn der Encounter editiert wurde
-    selectedEncounter.id! ! => Promise, dass es nicht null ist -->
-    <app-encounter (encounterModified)="onEncounterModified($event)" [id]="selectedEncounter.id!"></app-encounter>
-  </div>
+<table class="table">
+  <tr>
+    <th>EncounterId</th>
+    <th>Status</th>
+    <th></th>
+  </tr>
+  <tr *ngFor="let encounter of encounterArr$" (click)="selectEncounter(encounter)">
+    <td>{{ encounter.id }}</td>
+    <td>{{ encounter.status }}</td>
+  </tr>
+</table>
+
+<button (click)="createEncounter()" type="button" class="btn btn-success">Neuen Encounter anlegen</button>
+
+<!-- Wird nur angezeigt, wenn selectedEncounter gesetzt ist und auch eine id hat -->
+<div *ngIf="(selectedEncounter?.id != '')">
+  <p></p>
+  <h2>ID: {{ selectedEncounter.id }}</h2>
+  <p></p>
+  <!-- Die Encounter Component, bekommt mit [id] die id vom ausgewählten Encounter aus der Liste -->
+  <app-encounter [id]="selectedEncounter.id!" (encounterModified)="onEncounterModified($event)"></app-encounter>
 </div>

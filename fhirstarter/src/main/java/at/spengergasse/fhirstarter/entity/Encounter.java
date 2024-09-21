@@ -67,4 +67,9 @@ public class Encounter extends DomainResource {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "en_partof_re_id", referencedColumnName = "id")
     private Reference partOf;
+
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pp_en_id")
+    private List<Participant> participant  = new ArrayList<>();
 }
