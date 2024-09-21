@@ -8,26 +8,30 @@
         <ul>
             <li *ngFor="let name of practitioner?.name; let nameIndex = index">
 
+                <button (click)="addPrefix(name)" class="btn btn-success">Prefix hinzufügen</button>
+                <button (click)="addGiven(name)" class="btn btn-success">Given hinzufügen</button>
+                <button (click)="addSuffix(name)" class="btn btn-success">Suffix hinzufügen</button>
+
                 <div>
                     <div *ngFor="let p of name.prefix; let i = index; trackBy: trackByFn">
 
                         Prefix: <input [(ngModel)]="name.prefix[i]" type="text">
 
-                        <button (click)="addPrefix(name)" class="btn btn-success">Prefix hinzufügen</button>
+                        
                         <button (click)="deletePrefix(name, i)" class="btn btn-danger">Prefix löschen</button>
                     </div>
                     <div *ngFor="let g of name.given; let i = index; trackBy: trackByFn">
 
                         Given: <input [(ngModel)]="name.given[i]" type="text">
 
-                        <button (click)="addGiven(name)" class="btn btn-success">Given hinzufügen</button>
+                        
                         <button (click)="deleteGiven(name, i)" class="btn btn-danger">Given löschen</button>
 
                     </div>
                     <div *ngFor="let s of name.suffix; let i = index; trackBy: trackByFn">
                         Suffix: <input [(ngModel)]="name.suffix[i]" type="text">
 
-                        <button (click)="addSuffix(name)" class="btn btn-success">Suffix hinzufügen</button>
+                        
                         <button (click)="deleteSuffix(name, i)" class="btn btn-danger">Suffix löschen</button>
                     </div>
                     <p></p>
