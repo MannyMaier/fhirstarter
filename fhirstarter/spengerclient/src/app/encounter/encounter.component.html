@@ -26,17 +26,19 @@
       <button (click)="addDiagnosis()" class="btn btn-success">Diagnose hinzufügen</button>
       <p></p>
       <ul>
-        <li *ngFor="let diagnosis of encounter.diagnosis">
+        <li *ngFor="let diagnosis of encounter.diagnosis; let i = index">
           <div>
             Condition Reference: <input [(ngModel)]="diagnosis.condition.reference" type="text" placeholder="Referenz">
-            <input [(ngModel)]="diagnosis.condition.type" type="text" placeholder="type">
-            <input [(ngModel)]="diagnosis.condition.display" type="text" placeholder="display">
+            <input [(ngModel)]="diagnosis.condition.type" type="text" placeholder="Type">
+            <input [(ngModel)]="diagnosis.condition.display" type="text" placeholder="Display">
           </div>
           <div>
             Rank: <input [(ngModel)]="diagnosis.rank" type="number" min="0">
+            <button (click)="deleteDiagnosis(i)" class="btn btn-danger">Diagnose löschen</button>
             <p></p>
           </div>
         </li>
+        
       </ul>
     </div>
   </li>
@@ -46,37 +48,35 @@
       <h3>Participant hinzufügen</h3>
       <button (click)="addParticipant()" class="btn btn-success">Teilnehmer hinzufügen</button>
       <ul>
-        <li *ngFor="let participant of encounter.participant">
+        <li *ngFor="let participant of encounter.participant; let i = index">
           <div>
             <p></p>
             Types:
             <p></p>
-            <div *ngFor="let participant of encounter.participant; let i = index">
-              
-              <li *ngFor="let type of participant.type; let j = index">
+            <div *ngFor="let type of participant.type; let j = index">
+              <li>
                 <input [(ngModel)]="type.text" placeholder="Typ eingeben" />
                 <button (click)="removeType(i, j)">Entfernen</button>
               </li>
-              <p></p>
-              <button (click)="addType(i)" class="btn btn-success">Neuen Typ hinzufügen</button>
-              <p></p>
             </div>
-            
-            
-
+            <p></p>
+            <button (click)="addType(i)" class="btn btn-success">Neuen Typ hinzufügen</button>
+            <p></p>
+        
             <div>
               Period Start: <input [(ngModel)]="participant.period.start" type="datetime-local">
               Period End: <input [(ngModel)]="participant.period.end" type="datetime-local">
             </div>
             <p></p>
             <div>
-              Individual Reference: <input [(ngModel)]="participant.individual.reference" type="text"
-                placeholder="Referenz">
+              Individual Reference: <input [(ngModel)]="participant.individual.reference" type="text" placeholder="Referenz">
               <input [(ngModel)]="participant.individual.type" type="text" placeholder="Typ">
               <input [(ngModel)]="participant.individual.display" type="text" placeholder="Anzeige">
             </div>
+            <button (click)="deleteParticipant(i)" class="btn btn-danger">Teilnehmer löschen</button>
           </div>
         </li>
+        
       </ul>
     </div>
 
