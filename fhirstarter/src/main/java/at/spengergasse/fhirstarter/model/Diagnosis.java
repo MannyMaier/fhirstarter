@@ -26,7 +26,7 @@ public class Diagnosis extends BackboneElement{
     private Reference condition;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cc_di_id")
+    @JoinColumn(name = "di_cc_id")
     private CodeableConcept use;
 
     //Nur positive Werte erlaubt

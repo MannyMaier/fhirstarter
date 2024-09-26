@@ -19,7 +19,7 @@ INSERT INTO `fhirstarter`.`at_attachment` (`at_duration`, `at_frames`, `at_heigh
 INSERT INTO `fhirstarter`.`cc_codeableconcept` (`cc_text`, `id`)VALUES('Concept 1', '1'),('Concept 2', '2'),('Concept 3', '3');
 
 -- Inserts für co_coding
-INSERT INTO `fhirstarter`.`co_coding` (`co_user_selected`, `co_cc_id`, `co_code`, `co_display`, `co_system`, `co_version`, `id`)VALUES(1, '1', 'A001', 'Code A', 'http://example.com/systemA', '1.0', '1'),(0, '2', 'B002', 'Code B', 'http://example.com/systemB', '2.0', '2'),(1, '3', 'C003', 'Code C', 'http://example.com/systemC', '3.0', '3');
+INSERT INTO `fhirstarter`.`co_coding` (`co_userselected`, `co_cc_id`, `co_code`, `co_display`, `co_system`, `co_version`, `id`)VALUES(1, '1', 'A001', 'Code A', 'http://example.com/systemA', '1.0', '1'),(0, '2', 'B002', 'Code B', 'http://example.com/systemB', '2.0', '2'),(1, '3', 'C003', 'Code C', 'http://example.com/systemC', '3.0', '3');
 
 -- Inserts für cp_contactpoint
 INSERT INTO `fhirstarter`.`cp_contactpoint` (`cp_rank`, `cp_contactkind`, `cp_pe_id`, `cp_systemcode`, `id`, `cp_pa_id`, `cp_value`)VALUES(1, 'home', '2022-01-01', 'phone', '1', '123456789', '123-456-7890'),(2, 'work', '2022-01-02', 'email', '2', 'work@example.com', 'work@example.com'),(3, 'temp', '2022-01-03', 'sms', '3', '987654321', '987-654-3210');
@@ -102,7 +102,7 @@ INSERT INTO `fhirstarter`.`co_coding` (`id`, `co_cc_id`, `co_system`, `co_code`,
 
 INSERT INTO `fhirstarter`.`qu_qualification` (`id`, `qu_pr_id`, `qu_cc_id`, `qu_pe_id`) VALUES ('qu1', 'f005', 'PRHCC', 'pe1'), ('qu2', 'f005', 'PRHCC2', 'pe2');
 
-INSERT INTO `fhirstarter`.`co_coding` (`id`, `co_cc_id`, `co_system`, `co_code`, `co_display`, `co_user_selected`) VALUES ('co2', 'PRHCC', 'https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/29600', '677091', 'MD', 1), ('co3', 'PRHCC', 'https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/29600', '677079', 'PhD', 1);
+INSERT INTO `fhirstarter`.`co_coding` (`id`, `co_cc_id`, `co_system`, `co_code`, `co_display`, `co_userselected`) VALUES ('co2', 'PRHCC', 'https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/29600', '677091', 'MD', 1), ('co3', 'PRHCC', 'https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/29600', '677079', 'PhD', 1);
 
 
 INSERT INTO `fhirstarter`.`pe_period` (`pe_start`, `id`) VALUES ('2014-07-09 06:00:00','pe1'), ('2014-07-09 06:00:00','pe2');
@@ -164,7 +164,7 @@ INSERT INTO `fhirstarter`.`co_coding` (`id`, `co_cc_id`, `co_system`, `co_code`,
 INSERT INTO `fhirstarter`.`qu_qualification` (`id`, `qu_pr_id`, `qu_cc_id`, `qu_pe_id`) VALUES ('qu3', 'f006', 'PRHCC3', 'pe3'), ('qu4', 'f006', 'PRHCC4', 'pe4');
 
 -- Inserts für co_coding
-INSERT INTO `fhirstarter`.`co_coding` (`id`, `co_cc_id`, `co_system`, `co_code`, `co_display`, `co_user_selected`) VALUES ('co5', 'PRHCC3', 'https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/29600', '123456', 'MD', 1), ('co6', 'PRHCC3', 'https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/29600', '654321', 'PhD', 1);
+INSERT INTO `fhirstarter`.`co_coding` (`id`, `co_cc_id`, `co_system`, `co_code`, `co_display`, `co_userselected`) VALUES ('co5', 'PRHCC3', 'https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/29600', '123456', 'MD', 1), ('co6', 'PRHCC3', 'https://fhir.cerner.com/ec2458f2-1e24-41c8-b71b-0e701af7583d/codeSet/29600', '654321', 'PhD', 1);
 
 -- Inserts für pe_period
 INSERT INTO `fhirstarter`.`pe_period` (`pe_start`, `id`) VALUES ('2000-01-01 00:00:00','pe3'), ('2000-01-01 00:00:00','pe4');
@@ -179,47 +179,36 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- Encounter
 
 -- Encounter
-
--- Deaktivieren der Fremdschlüsselprüfung vor dem Import
 SET FOREIGN_KEY_CHECKS = 0;
 
--- Narrative Beschreibung des Encounters
-INSERT INTO `na_narrative` (`id`, `na_div`, `na_status`) VALUES ('f201', '<div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative</b></p><div style="display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%"><p style="margin-bottom: 0px">Resource &quot;f201&quot; </p></div><p><b>identifier</b>: id: Encounter_Roel_20130404 (TEMP)</p><p><b>status</b>: finished</p><p><b>class</b>: ambulatory (Details: http://terminology.hl7.org/CodeSystem/v3-ActCode code AMB = \'ambulatory\', stated as \'ambulatory\')</p><p><b>type</b>: Consultation <span style="background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki"> (<a href="https://browser.ihtsdotools.org/">SNOMED CT</a>#11429006)</span></p><p><b>priority</b>: Normal <span style="background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki"> (<a href="https://browser.ihtsdotools.org/">SNOMED CT</a>#17621005)</span></p><p><b>subject</b>: <a href="patient-f201.html">Patient/f201: Roel</a> &quot;Roel&quot;</p><h3>Participants</h3><table class="grid"><tr><td>-</td><td><b>Actor</b></td></tr><tr><td>*</td><td><a href="practitioner-f201.html">Practitioner/f201</a> &quot;Dokter Bronsig&quot;</td></tr></table><p><b>serviceProvider</b>: <a href="organization-f201.html">Organization/f201</a> &quot;Artis University Medical Center (AUMC)&quot;</p></div>', 'generated');
+INSERT INTO `fhirstarter`.`en_encounter` (`id`, `en_status`, `dr_na_id`, `en_partof_re_id`, `en_subject_re_id`) VALUES ('f201', 'finished', 'NaEncf201', 'PaOfEncf201', 'SubEncf201');
 
--- Identifier für den Encounter
-INSERT INTO `id_identifier` (`id`, `id_use`, `id_value`) VALUES ('f201', 'temp', 'Encounter_Roel_20130404');
+INSERT INTO `fhirstarter`.`na_narrative` (`id`, `na_div`, `na_status`) VALUES ('NaEncf201', '<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative</b></p><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Resource &quot;f201&quot; </p></div><p><b>identifier</b>: id: Encounter_Roel_20130404 (TEMP)</p><p><b>status</b>: finished</p><p><b>class</b>: ambulatory (Details: http://terminology.hl7.org/CodeSystem/v3-ActCode code AMB = ''ambulatory'', stated as ''ambulatory'')</p><p><b>type</b>: Consultation <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\"> (<a href=\"https://browser.ihtsdotools.org/\">SNOMED CT</a>#11429006)</span></p><p><b>priority</b>: Normal <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\"> (<a href=\"https://browser.ihtsdotools.org/\">SNOMED CT</a>#17621005)</span></p><p><b>subject</b>: <a href=\"patient-f201.html\">Patient/f201: Roel</a> &quot;Roel&quot;</p><h3>Participants</h3><table class=\"grid\"><tr><td>-</td><td><b>Actor</b></td></tr><tr><td>*</td><td><a href=\"practitioner-f201.html\">Practitioner/f201</a> &quot;Dokter Bronsig&quot;</td></tr></table><p><b>serviceProvider</b>: <a href=\"organization-f201.html\">Organization/f201</a> &quot;Artis University Medical Center (AUMC)&quot;</p></div>', 'generated');
 
--- Das ist der Encounter
-INSERT INTO `en_encounter` (`id`, `dr_na_id`, `en_episodeofcare_re_id`, `en_partof_re_id`, `en_pe_id`, `en_reasonreference_re_id`, `en_subject_re_id`, `en_status`) VALUES ('f201', 'f201',  NULL, 'f203', NULL, NULL, 'f201', 'finished');
+INSERT INTO `fhirstarter`.`id_identifier` (`id`, `en_id_identifier`, `id_use`, `id_value`) VALUES ('IdentEncf201', 'f201', 'temp', 'Encounter_Roel_20130404');
 
--- Appointment für den Encounter
-INSERT INTO `re_reference` (`id`, `re_en_id`, `re_reference`) VALUES ('f202', 'f201', 'Appointment/example');
+INSERT INTO `fhirstarter`.`cc_codeableconcept` (`id`) VALUES ('CCEncf201');
 
--- Statusverlauf des Encounters
-INSERT INTO `sh_statushistory` (`id`, `sh_en_id`, `sh_pe_id`, `sh_status`) VALUES ('f201', 'f201', 'f201', 'in_progress');
+INSERT INTO `fhirstarter`.`co_coding` (`id`, `co_cc_id`, `co_system`, `co_code`, `co_display`) VALUES ('CodEncf201', 'CCEncf201', 'http://snomed.info/sct', '11429006', 'Consultation');
 
-INSERT INTO `pe_period` (`id`, `pe_start`) VALUES ('f201', '2013-03-08 00:00:00');
+INSERT INTO `fhirstarter`.`re_reference` (`id`, `re_en_id`, `re_reference`, `re_display`) VALUES ('SubEncf201', 'f201', 'Patient/f201', 'Roel');
 
--- Teilnehmer am Encounter
-INSERT INTO `pp_participant` (`id`, `pp_individual_re_id`, `pp_pe_id`) VALUES ('f201', 'f201', NULL);
+INSERT INTO `fhirstarter`.`pp_participant` (`id`, `pp_en_id`, `pp_individual_re_id`) VALUES ('PPEncf201', 'f201', 'IndPPf201');
 
--- Insert für die Tabelle re_reference
--- Dies wird benötigt, um auf die Referenz in der di_diagnosis Tabelle zu verweisen
+INSERT INTO `fhirstarter`.`re_reference` (`id`, `re_reference`) VALUES ('IndPPf201', 'Practitioner/f201');
 
-INSERT INTO `re_reference` (`id`, `re_reference`, `re_type`, `re_display`, `re_id_id`) VALUES ('re_ref1', 'Complications from Roel\'s TPF chemotherapy on January 28th, 2013', 'Condition', 'Complications from Roel\'s TPF chemotherapy on January 28th, 2013', 'id1');
+INSERT INTO `fhirstarter`.di_diagnosis (`id`, `di_en_id`, `di_condition_re_id`, `di_cc_id`, `di_rank`) VALUES ('DiaEncf201', 'f201', 'ConEncf201', 'CCDiEncf201', 2), ('Dia2Encf201', 'f201', 'Con2Encf201', 'CCDi2Encf201', 1);
 
-INSERT INTO `re_reference` (`id`, `re_reference`, `re_type`, `re_display`, `re_id_id`) VALUES ('re_ref2', 'The patient is treated for a tumor', 'Condition', 'The patient is treated for a tumor', 'id2');
+INSERT INTO `fhirstarter`.`re_reference` (`id`, `re_display`) VALUES ('ConEncf201', 'Complications from Roel\'s TPF chemotherapy on January 28th, 2013'), ('Con2Encf201', 'The patient is treated for a tumor');
 
--- Insert für die Tabelle cc_codeableconcept
--- Dies wird benötigt, um auf die CodeableConcept-Daten in der di_diagnosis Tabelle zu verweisen
+INSERT INTO `fhirstarter`.`cc_codeableconcept` (`id`) VALUES ('CCDiEncf201'), ('CCDi2Encf201');
 
-INSERT INTO `cc_codeableconcept` (`id`, `cc_text`) VALUES ('cc1', 'Admission diagnosis'), ('cc2', 'Chief complaint');
+INSERT INTO `fhirstarter`.`co_coding` (`id`, `co_cc_id`, `co_system`, `co_code`, `co_display`) VALUES ('CodDiEncf201', 'CCDiEncf201', 'http://terminology.hl7.org/CodeSystem/diagnosis-role', 'AD', 'Admission diagnosis'), ('CodDi2Encf201', 'CCDi2Encf201', 'http://terminology.hl7.org/CodeSystem/diagnosis-role', 'CC', 'Chief complaint');
 
--- Insert für die Tabelle di_diagnosis
--- Hier werden die Diagnosen basierend auf den Referenzen und CodeableConcepts eingefügt
+INSERT INTO `fhirstarter`.`re_reference` (`id`, `re_en_id`, `re_reference`) VALUES ('APEncf201', 'f201', 'Appointment/example'), ('PaOfEncf201', 'f201', 'Encounter/f203');
 
-INSERT INTO `di_diagnosis` (`id`, `di_condition_re_id`, `cc_di_id`, `di_rank`) VALUES ('diag1', 're_ref1', 'cc1', 2),('diag2', 're_ref2', 'cc2', 1);
+INSERT INTO `fhirstarter`.`sh_statushistory` (`id`, `sh_en_id`, `sh_status`, `sh_pe_id`) VALUES ('SHEncf201', 'f201', 'in_progress', 'PESH201');
 
--- Aktivieren der Fremdschlüsselprüfung nach dem Import
+INSERT INTO `fhirstarter`.`pe_period` (`id`, `pe_start`) VALUES ('PESH201', '2013-03-08');
+
 SET FOREIGN_KEY_CHECKS = 1;
-

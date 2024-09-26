@@ -19,7 +19,7 @@ public class Reference extends Element{
     private String type;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "re_id_id")
+    @JoinColumn(name = "re_id_identifier")
     private Identifier identifier;
 
     @Column(name="re_display")
