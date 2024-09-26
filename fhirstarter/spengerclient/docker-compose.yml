@@ -1,0 +1,12 @@
+services:
+  angular:
+    build: .
+    ports:
+      - 80:80
+    stdin_open: true
+    tty: true
+
+    #docker compose up -d
+    #docker compose logs -f
+    #docker compose ps
+      

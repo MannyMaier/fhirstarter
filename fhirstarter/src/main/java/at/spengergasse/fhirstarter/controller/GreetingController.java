@@ -1,4 +1,4 @@
-package at.spengergasse.fhirstarter.controller;
+/*package at.spengergasse.fhirstarter.controller;
 
 
 import at.spengergasse.fhirstarter.model.Greeting;
@@ -25,4 +25,4 @@ public class GreetingController {
         //return new Greeting(counter.incrementAndGet(), String.format(template, name));
         return greetingRepository.findAll();
     }
-}
+}*/

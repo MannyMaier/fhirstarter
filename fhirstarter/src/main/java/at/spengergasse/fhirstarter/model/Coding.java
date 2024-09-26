@@ -25,6 +25,6 @@ public class Coding extends Element {
     @Column(name = "co_display")
     private String display;
 
-    @Column(name = "co_userSelected")
+    @Column(name = "co_userselected")
     private Boolean userSelected;
 }

@@ -69,33 +69,23 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <image>
-                        <builder>paketobuildpacks/builder-jammy-base:latest</builder>
-                    </image>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
-
-            <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.12.0</version>
-
+                <!-- Check version of Angular project, update with ng update, if ng build does not work -->
                 <configuration>
-                    <!-- Anpassen, Versionen bekommt man mit "npm version" in der Konsole -->
-                    <nodeVersion>v20.12.2</nodeVersion>
+                    <!-- check version with node -v
+                    update with
+                    npm install -g n
+                    -->
+                    <nodeVersion>20.12.2</nodeVersion>
+                    <!-- check version with npm -version
+                    update with
+                    npm install npm
+                    -->
                     <npmVersion>10.5.2</npmVersion>
-
-                    <workingDirectory>client/</workingDirectory>
+                    <!-- change to Directory, where Client is, like 5xHBGM ... -->
+                    <workingDirectory>spengerclient/</workingDirectory>
                 </configuration>
 
                 <executions>
@@ -146,19 +136,21 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <!-- Ordner anlegen-->
                             <outputDirectory>src/main/resources/static/</outputDirectory>
                             <resources>
                                 <resource>
-                                    <!-- Anpassen, Pfad vom Client angeben. Kann probeweise mit ng build angelegt werden. -->
-                                    <directory>spengerclient\dist\spengerclient\browser</directory>
+                                    <!-- change directory. in the client folder run ng build to get the dist/... folder-->
+                                    <directory>spengerclient/dist/spengerclient/browser</directory>
                                 </resource>
                             </resources>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
 
         </plugins>
     </build>
