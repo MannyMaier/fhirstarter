@@ -2,6 +2,8 @@ package at.spengergasse.fhirstarter.controller;
 
 import at.spengergasse.fhirstarter.entity.Encounter;
 import at.spengergasse.fhirstarter.repository.EncounterRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +20,9 @@ public class EncounterController {
 
     @Autowired
     private EncounterRepository encounterRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @GetMapping("/")
     public Iterable<Encounter> getAllEncounters() {
@@ -53,7 +58,13 @@ public class EncounterController {
             encounter.setParticipant(encounterDetails.getParticipant());
             encounter.setDiagnosis(encounterDetails.getDiagnosis());
 
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+
             Encounter updatedEncounter = encounterRepository.save(encounter);
+
+            transaction.commit();
+
             return ResponseEntity.ok(updatedEncounter);
         }).orElseGet(() -> createEncounter(encounterDetails));
     }
