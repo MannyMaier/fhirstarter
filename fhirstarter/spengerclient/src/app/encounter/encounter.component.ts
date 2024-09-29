@@ -34,7 +34,7 @@ export class EncounterComponent implements OnInit {
       console.log('Encounter:', this.encounter);
 
       if (this.encounter.period === undefined || this.encounter.period === null) {
-        this.encounter.period = new Period(new Date('1999-01-01T00:00:00Z'), new Date('1999-01-01T00:00:00'));
+        this.encounter.period = new Period(new Date('1999-01-01T00:00:00'), new Date('1999-01-01T00:00:00'));
         console.log(this.encounter.period) // Stelle sicher, dass period initialisiert wird
       }
       
@@ -62,10 +62,7 @@ export class EncounterComponent implements OnInit {
         // Setze eine neue Periode, falls keine existiert
         this.encounter.period = new Period(new Date('1999-01-01T00:00:00'), new Date('1999-01-01T00:00:00'));
     }
-    
-    
-
-
+  
     this.service.updateEncounter(this.encounter).subscribe(
         (updatedEncounter) => {
             console.log("Encounter updated", updatedEncounter);
@@ -131,8 +128,6 @@ export class EncounterComponent implements OnInit {
     this.encounter.participant.push(newParticipant);
   }
   
-  
-
   deleteParticipant(index: number) {
     this.encounter.participant.splice(index, 1);
   }
@@ -140,7 +135,6 @@ export class EncounterComponent implements OnInit {
   getStatusValues(): string[] {
     return Object.values(EncounterStatus);
   }
-
    
   addType(participantIndex: number) {
     const newType = new CodeableConcept([], ''); // Neue CodeableConcept instanz
@@ -150,6 +144,4 @@ export class EncounterComponent implements OnInit {
   removeType(participantIndex: number, typeIndex: number) {
     this.encounter.participant[participantIndex].type.splice(typeIndex, 1);
   }
-  
-
 }
