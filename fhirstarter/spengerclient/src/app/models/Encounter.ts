@@ -1,8 +1,8 @@
 export class Encounter {
   constructor(
-    public id: string = '',
+    public id: string = "",
     public status: EncounterStatus = EncounterStatus.Planned,
-    public period: Period = new Period(new Date('1999-01-01T00:00:00'), new Date('1999-01-01T00:00:00')),
+    public period: Period = new Period(new Date("1999-01-01T00:00:00"), new Date("1999-01-01T00:00:00")),
     public type: Array<CodeableConcept> = [],
     public diagnosis: Array<Diagnosis> = [],
     public participant: Array<Participant> = [],
@@ -11,32 +11,34 @@ export class Encounter {
     public subject: Reference = new Reference(),
     public episodeOfCare: Reference = new Reference(),
     public reasonReference: Reference = new Reference(),
-    public partOf: Reference = new Reference(),    
-  ) {}
+    public partOf: Reference = new Reference(),
+    /*public statusHistory: Array<StatusHistory> = []*/
+  ) { }
 }
 
-export class Period {
+/* export class StatusHistory {
   constructor(
-    public start: Date,
-    public end: Date,
-  ) {}
+    public period: Period = new Period(new Date("1999-01-01T00:00:00"), new Date("1999-01-01T00:00:00"),
+    )
+  ) { }
+} */
+
+export class Period {
+  constructor(public start: Date, public end: Date) {console.log("Periodclass: ", start, end); }
 }
 
 export class CodeableConcept {
-  constructor(
-    public coding: Array<Coding> = [],
-    public text: string = ''
-  ) {}
+  constructor(public coding: Array<Coding> = [], public text: string = "") { }
 }
 
 export class Coding {
   constructor(
-    public system: string = '',
-    public version: string = '',
-    public code: string = '',
-    public display: string = '',
+    public system: string = "",
+    public version: string = "",
+    public code: string = "",
+    public display: string = "",
     public userSelected: boolean = false
-  ) {}
+  ) { }
 }
 
 export class Diagnosis {
@@ -44,40 +46,36 @@ export class Diagnosis {
     public condition: Reference = new Reference(),
     public use: CodeableConcept = new CodeableConcept(),
     public rank: number = 0
-  ) {}
+  ) { }
 }
-
 
 export class Participant {
   constructor(
     public type: Array<CodeableConcept> = [],
-    public period: Period = new Period(new Date('1999-01-01T00:00:00'), new Date('1999-01-01T00:00:00')),
+    public period: Period = new Period(new Date("1999-01-01T00:00:00"), new Date("1999-01-01T00:00:00")),
     public individual: Reference = new Reference()
-  ) {}
+  ) { }
 }
 
 export class Reference {
   constructor(
-    public reference: string = '',
-    public type: string = '',
+    public reference: string = "",
+    public type: string = "",
     public identifier: Identifier = new Identifier(),
-    public display: string = ''
-  ) {}
+    public display: string = ""
+  ) { }
 }
 
 export class Identifier {
-  constructor(
-    public value: string = ''
-) {}
+  constructor(public value: string = "") { }
 }
 
 export enum EncounterStatus {
-  Planned = 'planned',
-  Arrived = 'arrived',
-  Triaged = 'triaged',
-  InProgress = 'in-progress',
-  OnLeave = 'onleave',
-  Finished = 'finished',
-  Cancelled = 'cancelled'
+  Planned = "planned",
+  Arrived = "arrived",
+  Triaged = "triaged",
+  InProgress = "in-progress",
+  OnLeave = "onleave",
+  Finished = "finished",
+  Cancelled = "cancelled",
 }
-
