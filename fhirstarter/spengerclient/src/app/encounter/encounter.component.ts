@@ -34,13 +34,13 @@ export class EncounterComponent implements OnInit {
       console.log('Encounter:', this.encounter);
 
       if (this.encounter.period === undefined || this.encounter.period === null) {
-        this.encounter.period = new Period(new Date('1999-01-01T00:00:00'), new Date('1999-01-01T00:00:00'));
+        this.encounter.period = new Period(new Date('1999-01-01T00:00'), new Date('1999-01-01T00:00'));
         console.log(this.encounter.period) // Stelle sicher, dass period initialisiert wird
       }
       
       for (let i = 0; i < this.encounter.participant.length; i++) {
         if (this.encounter.participant[i].period === undefined || this.encounter.participant[i].period === null) {
-          this.encounter.participant[i].period = new Period(new Date('1999-01-01T00:00:00'), new Date('1999-01-01T00:00:00'));
+          this.encounter.participant[i].period = new Period(new Date('1999-01-01T00:00'), new Date('1999-01-01T00:00'));
           console.log(this.encounter.participant[i].period) // Stelle sicher, dass period initialisiert wird
         }
         
@@ -60,7 +60,7 @@ export class EncounterComponent implements OnInit {
         this.encounter.period = new Period(this.encounter.period.start, this.encounter.period.end);
     } else {
         // Setze eine neue Periode, falls keine existiert
-        this.encounter.period = new Period(new Date('1999-01-01T00:00:00'), new Date('1999-01-01T00:00:00'));
+        this.encounter.period = new Period(new Date('1999-01-01T00:00'), new Date('1999-01-01T00:00'));
     }
   
     this.service.updateEncounter(this.encounter).subscribe(
@@ -121,7 +121,7 @@ export class EncounterComponent implements OnInit {
           ''
         ),
       ],
-      period: new Period(new Date('1999-01-01T00:00:00'), new Date('1999-01-01T00:00:00')),
+      period: new Period(new Date('1999-01-01T00:00'), new Date('1999-01-01T00:00')),
       individual: new Reference('', '', new Identifier('identifier_value')),
     };
   

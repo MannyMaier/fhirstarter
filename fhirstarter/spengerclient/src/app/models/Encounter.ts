@@ -23,9 +23,11 @@ export class Encounter {
   ) { }
 } */
 
-export class Period {
-  constructor(public start: Date, public end: Date) {console.log("Periodclass: ", start, end); }
-}
+  export class Period {
+    constructor(public start: Date | null = null, public end: Date | null = null) {
+      console.log("Periodclass: ", start, end);
+    }
+  }
 
 export class CodeableConcept {
   constructor(public coding: Array<Coding> = [], public text: string = "") { }
@@ -52,7 +54,7 @@ export class Diagnosis {
 export class Participant {
   constructor(
     public type: Array<CodeableConcept> = [],
-    public period: Period = new Period(new Date("1999-01-01T00:00:00"), new Date("1999-01-01T00:00:00")),
+    public period: Period = new Period(new Date(), new Date()),
     public individual: Reference = new Reference()
   ) { }
 }
