@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
-import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class EncounterRepositoryTest {
@@ -25,8 +25,21 @@ public class EncounterRepositoryTest {
     @Autowired
     private ResourceLoader resourceLoader;
 
+    public static Encounter returnOneEncounterJSON(ResourceLoader resourceLoader, ObjectMapper om) {
+        Encounter e = null;
+        try {
+            File dataFile = resourceLoader.getResource("classpath:Encounter.json").getFile();
+            System.out.println("File exists: " + dataFile.exists());
+            e = om.readValue(dataFile, Encounter.class);
+        } catch (Exception ex) {
+            System.out.println("Error reading JSON Object: " + ex.getMessage());
+        }
+        return e;
+    }
+
     @Test
-    public void testSaveAndLoadOneEncounter(){
+    @Transactional
+    public void testSaveAndLoadOneEncounter() {
         //1. Erstellen einer mit Daten befüllten Encounterinstanz
         Encounter e = returnOneEncounterJSON(resourceLoader, om);
         //2. Instanz in die DB speichern
@@ -39,45 +52,38 @@ public class EncounterRepositoryTest {
                 .ignoringCollectionOrder()
                 .ignoringFieldsMatchingRegexes(".*id")
                 .ignoringFields("id")
-                .isEqualTo(e);
+                .isEqualTo(savedE);
     }
 
     @Test
-    public void saveAndUpdateOneEncounter(){
+    @Transactional
+    public void saveAndUpdateOneEncounter() {
 
-        // Man darf keine Id angeben!
         Encounter e = returnOneEncounterJSON(resourceLoader, om);
-
-        // Speichern des neuen Encounter
         Encounter savedE = encounterRepository.save(e);
+        Encounter loadedEncounter = encounterRepository.findById(savedE.getId()).get();
 
-        // Sicherstellen, dass die ID existiert
-        assertNotNull(savedE.getId(), "Encounter ID sollte nicht null sein!");
+        savedE.setStatus(Encounter.Statuscode.cancelled);
 
-        // Laden des gespeicherten Encounter
-        Encounter loadedEncounter = encounterRepository.findById(savedE.getId())
-                .orElseThrow(() -> new RuntimeException("Encounter nicht gefunden!"));
+        encounterRepository.save(savedE);
 
-        // Status aktualisieren
-        e.setStatus(Encounter.Statuscode.cancelled);
+        loadedEncounter = encounterRepository.findById(savedE.getId()).get();
 
-        // Speichern der aktualisierten Encounter
-        Encounter updatedE = encounterRepository.save(e);
 
-        // Laden des aktualisierten Encounter
-        loadedEncounter = encounterRepository.findById(updatedE.getId())
-                .orElseThrow(() -> new RuntimeException("Aktualisierter Encounter nicht gefunden!"));
-
-        // Vergleich der geladenen und der aktualisierten Entität
         assertThat(loadedEncounter)
                 .usingRecursiveComparison()
                 .ignoringCollectionOrder()
                 .ignoringFieldsMatchingRegexes(".*id")
-                .isEqualTo(updatedE);
+                .ignoringFields("id")
+                .isEqualTo(savedE);
+
+        assertEquals(loadedEncounter.getStatus(), savedE.getStatus());
+
     }
 
     @Test
-    public void saveAndDeleteOneEncounter(){
+    @Transactional
+    public void saveAndDeleteOneEncounter() {
         Encounter e = returnOneEncounterJSON(resourceLoader, om);
         Encounter savedE = encounterRepository.save(e);
         Encounter loadedEncounter = encounterRepository.findById(savedE.getId()).get();
@@ -91,17 +97,5 @@ public class EncounterRepositoryTest {
         encounterRepository.delete(loadedEncounter);
 
         assertThat(encounterRepository.findById(loadedEncounter.getId())).isEmpty();
-    }
-
-    public static Encounter returnOneEncounterJSON(ResourceLoader resourceLoader, ObjectMapper om) {
-        Encounter e = null;
-        try {
-            File dataFile = resourceLoader.getResource("classpath:Encounter.json").getFile();
-            System.out.println("File exists: " + dataFile.exists());
-            e = om.readValue(dataFile, Encounter.class);
-        } catch (Exception ex) {
-            System.out.println("Error reading JSON Object: " + ex.getMessage());
-        }
-        return e;
     }
 }

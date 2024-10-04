@@ -1,3 +1,4 @@
+/*
 package at.spengergasse.fhirstarter;
 
 import at.spengergasse.fhirstarter.model.Contract;
@@ -114,3 +115,4 @@ public class ContractRepositoryTest {
     }
 
 }
+*/

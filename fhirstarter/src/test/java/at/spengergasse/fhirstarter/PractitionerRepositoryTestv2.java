@@ -15,7 +15,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 public class PractitionerRepositoryTestv2 {
@@ -29,8 +28,23 @@ public class PractitionerRepositoryTestv2 {
     @Autowired
     private ResourceLoader resourceLoader;
 
+    public static Practitioner returnOnePractitionerJSON(ResourceLoader resourceLoader, ObjectMapper om) {
+        String json = "";
+        Practitioner p = null;
+        //OM Configure
+        try {
+            File dataFile =
+                    resourceLoader.getResource("classpath:Practitioner.json").getFile();
+            System.out.println("File exists" + dataFile.exists());
+            p = om.readValue(dataFile, Practitioner.class);
+        } catch (Exception e) {
+            System.out.println("Error reading JSON Object: " + e.getMessage());
+        }
+        return p;
+    }
+
     @Test
-    public void testSaveAndLoadOnePractitioner(){
+    public void testSaveAndLoadOnePractitioner() {
         //1. Erstellen einer mit Daten befüllten Practitionerinstanz
         Practitioner p = returnOnePractitionerJSON(resourceLoader, om);
         //2. Instanz in die DB speichern
@@ -57,17 +71,17 @@ public class PractitionerRepositoryTestv2 {
     }
 
     @Test
-    public void saveAndUpdateOnePractitioner(){
+    public void saveAndUpdateOnePractitioner() {
 
         Practitioner p = returnOnePractitionerJSON(resourceLoader, om);
         Practitioner savedP = practitionerRepository.save(p);
         Practitioner loadedPractitioner = practitionerRepository.findById(savedP.getId()).get();
 
-        p.setGender(GenderCode.male);
+        savedP.setGender(GenderCode.male);
 
-        practitionerRepository.save(p);
+        practitionerRepository.save(savedP);
 
-        loadedPractitioner = practitionerRepository.findById(p.getId()).get();
+        loadedPractitioner = practitionerRepository.findById(savedP.getId()).get();
 
 
         assertThat(loadedPractitioner)
@@ -75,17 +89,14 @@ public class PractitionerRepositoryTestv2 {
                 .ignoringCollectionOrder()
                 .ignoringFieldsMatchingRegexes(".*id")
                 .ignoringFields("id")
-                .isEqualTo(p);
+                .isEqualTo(savedP);
 
-
-
-
-        assertEquals(loadedPractitioner.getActive(), p.getActive());
+        assertEquals(loadedPractitioner.getActive(), savedP.getActive());
 
     }
 
     @Test
-    public void saveAndDeleteOnePractitioner(){
+    public void saveAndDeleteOnePractitioner() {
         Practitioner p = returnOnePractitionerJSON(resourceLoader, om);
         Practitioner savedP = practitionerRepository.save(p);
         Practitioner loadedPractitioner = practitionerRepository.findById(savedP.getId()).get();
@@ -104,20 +115,6 @@ public class PractitionerRepositoryTestv2 {
         assertEquals(practitionerRepository.findById(loadedPractitioner.getId()), Optional.empty());
 
 
-    }
-    public static  Practitioner returnOnePractitionerJSON(ResourceLoader resourceLoader, ObjectMapper om) {
-        String json = "";
-        Practitioner p = null;
-        //OM Configure
-        try {
-            File dataFile =
-                    resourceLoader.getResource("classpath:Practitioner.json").getFile();
-            System.out.println("File exists"+dataFile.exists());
-            p = om.readValue(dataFile, Practitioner.class);
-        } catch (Exception e) {
-            System.out.println("Error reading JSON Object: " + e.getMessage());
-        }
-        return p;
     }
 
 }
