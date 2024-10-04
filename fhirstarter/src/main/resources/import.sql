@@ -191,7 +191,9 @@ INSERT INTO `fhirstarter`.`cc_codeableconcept` (`id`) VALUES ('CCEncf201');
 
 INSERT INTO `fhirstarter`.`co_coding` (`id`, `co_cc_id`, `co_system`, `co_code`, `co_display`) VALUES ('CodEncf201', 'CCEncf201', 'http://snomed.info/sct', '11429006', 'Consultation');
 
-INSERT INTO `fhirstarter`.`re_reference` (`id`, `re_en_id`, `re_reference`, `re_display`) VALUES ('SubEncf201', 'f201', 'Patient/f201', 'Roel');
+
+-- Bei 1:1 Beziehungen darf es die Referenz jeweils nur einmal geben!!!!!!!! #INFO
+INSERT INTO `fhirstarter`.`re_reference` (`id`, `re_en_id`, `re_reference`, `re_display`) VALUES ('SubEncf201', null, 'Patient/f201', 'Roel');
 
 INSERT INTO `fhirstarter`.`pp_participant` (`id`, `pp_en_id`, `pp_individual_re_id`) VALUES ('PPEncf201', 'f201', 'IndPPf201');
 
@@ -205,7 +207,7 @@ INSERT INTO `fhirstarter`.`cc_codeableconcept` (`id`) VALUES ('CCDiEncf201'), ('
 
 INSERT INTO `fhirstarter`.`co_coding` (`id`, `co_cc_id`, `co_system`, `co_code`, `co_display`) VALUES ('CodDiEncf201', 'CCDiEncf201', 'http://terminology.hl7.org/CodeSystem/diagnosis-role', 'AD', 'Admission diagnosis'), ('CodDi2Encf201', 'CCDi2Encf201', 'http://terminology.hl7.org/CodeSystem/diagnosis-role', 'CC', 'Chief complaint');
 
-INSERT INTO `fhirstarter`.`re_reference` (`id`, `re_en_id`, `re_reference`) VALUES ('APEncf201', 'f201', 'Appointment/example'), ('PaOfEncf201', 'f201', 'Encounter/f203');
+INSERT INTO `fhirstarter`.`re_reference` (`id`, `re_en_id`, `re_reference`) VALUES ('APEncf201', 'f201', 'Appointment/example'), ('PaOfEncf201', null , 'Encounter/f203');
 
 INSERT INTO `fhirstarter`.`sh_statushistory` (`id`, `sh_en_id`, `sh_status`, `sh_pe_id`) VALUES ('SHEncf201', 'f201', 'in_progress', 'PESH201');
 

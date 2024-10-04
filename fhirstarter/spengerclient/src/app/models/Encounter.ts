@@ -2,7 +2,7 @@ export class Encounter {
   constructor(
     public id: string = "",
     public status: EncounterStatus = EncounterStatus.Planned,
-    public period: Period = new Period(new Date("1999-01-01T00:00:00"), new Date("1999-01-01T00:00:00")),
+    public period: Period = new Period(new Date(), new Date()),
     public type: Array<CodeableConcept> = [],
     public diagnosis: Array<Diagnosis> = [],
     public participant: Array<Participant> = [],
@@ -57,7 +57,7 @@ export class Participant {
   ) { }
 }
 
-export class Reference {
+export class Reference {  
   constructor(
     public reference: string = "",
     public type: string = "",
