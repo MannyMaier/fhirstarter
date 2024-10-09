@@ -3,6 +3,7 @@ package at.spengergasse.fhirstarter.entity;
 import at.spengergasse.fhirstarter.model.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,8 @@ public class Encounter extends DomainResource {
     private List<Identifier> identifiers = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "en_status")
+    @Column(name = "en_status", nullable = false) //hier bei @Column für DB
+    @NotNull //hier für den Controller (http Requests
     private Statuscode status;
 
     @OneToMany(cascade = CascadeType.ALL)
