@@ -78,7 +78,7 @@
                     update with
                     npm install -g n
                     -->
-                    <nodeVersion>20.12.2</nodeVersion>
+                    <nodeVersion>v20.18.0</nodeVersion>
                     <!-- check version with npm -version
                     update with
                     npm install npm

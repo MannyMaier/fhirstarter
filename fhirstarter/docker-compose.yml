@@ -1,6 +1,6 @@
 
 services:
-  web:
+  web: 
     environment:
       spring_profiles_active: docker
     build: .
