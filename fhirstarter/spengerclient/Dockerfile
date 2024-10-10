@@ -4,9 +4,9 @@ WORKDIR /build
 
 COPY . .
 
-RUN npm ci # das selbe wie npm install, ohne user interaktion
+#RUN npm ci # das selbe wie npm install, ohne user interaktion
 
-RUN npm run build
+RUN npm ci && npm run build
 
 FROM nginx
 
