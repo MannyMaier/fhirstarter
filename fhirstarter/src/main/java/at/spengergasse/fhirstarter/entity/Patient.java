@@ -1,7 +1,10 @@
 package at.spengergasse.fhirstarter.entity;
 
 import at.spengergasse.fhirstarter.model.*;
+import at.spengergasse.fhirstarter.validators.PatientValid;
+import at.spengergasse.fhirstarter.validators.SvnrValid;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,10 +19,9 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@PatientValid
+@SvnrValid
 public class Patient extends DomainResource {
-
-    //TODO: at_attachement hat keinen Schlüssel zu Patient
-
 
     //diese Spalte wird in id_identifier erzeugt (obwohls hier geschrieben wird)
     @OneToMany(cascade = CascadeType.ALL)
@@ -42,6 +44,7 @@ public class Patient extends DomainResource {
     @Column(name = "pa_gender")
     private GenderCode gender;
 
+    @PastOrPresent
     @Column(name = "pa_birthdate")
     private LocalDate birthDate;
 

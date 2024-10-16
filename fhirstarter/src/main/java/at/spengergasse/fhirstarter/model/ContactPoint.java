@@ -1,6 +1,7 @@
 package at.spengergasse.fhirstarter.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 
 @Entity
@@ -25,6 +26,7 @@ public class ContactPoint extends Element {
     @Column(name = "cp_contactkind")
     private ContactKind use;
 
+    @Min(1)
     @Column(name = "cp_rank")
     private Integer rank;
 

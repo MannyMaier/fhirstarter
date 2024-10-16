@@ -1,6 +1,7 @@
 package at.spengergasse.fhirstarter.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -11,12 +12,15 @@ import lombok.*;
 @Setter
 @Builder
 public class Narrative extends Element{
-    public enum NarrativeStatusCode {generated, extensions, additional, empty}
+    public enum NarrativeStatus {generated, extensions, additional, empty}
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "na_status")
-    private NarrativeStatusCode status;
+    @Column(name = "na_status", nullable = false)
+    private NarrativeStatus status;
 
-    @Column(name = "na_div", length = 5000)
+    @NotNull
+    @Lob
+    @Column(name = "na_div" , length = 5000)
     private String div;
 }

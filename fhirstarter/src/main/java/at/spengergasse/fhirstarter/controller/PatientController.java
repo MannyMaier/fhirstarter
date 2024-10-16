@@ -2,12 +2,20 @@ package at.spengergasse.fhirstarter.controller;
 
 import at.spengergasse.fhirstarter.entity.Patient;
 import at.spengergasse.fhirstarter.repository.PatientRepository;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -31,8 +39,10 @@ public class PatientController {
         return patientRepository.findById(id).map(patient -> ResponseEntity.ok().body(patient)).orElse(ResponseEntity.notFound().build());
     }
 
+
+    //@Valid statt @Validated? --> @Valid überprüft alles, @Validated nur einzelne Parameter
     @PostMapping("/")
-    public ResponseEntity<Patient> createPatient(@Validated @RequestBody Patient patient) {
+    public ResponseEntity<Patient> createPatient(@Valid @RequestBody Patient patient) {
         patient.setId(null); // ensure to create new names
         var saved = patientRepository.save(patient);
         return ResponseEntity.created(URI.create("/api/patient/" + saved.getId())).body(saved);
@@ -63,6 +73,34 @@ public class PatientController {
             return ResponseEntity.ok().<Patient>build();
         }).orElse(ResponseEntity.notFound().build());
     }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public Map<String, String> onConstraintValidationException(ConstraintViolationException e) {
+        Map<String, String> errors = new HashMap<>();
+        for (ConstraintViolation violation : e.getConstraintViolations()) {
+            errors.put(violation.getPropertyPath().toString(),
+                    violation.getMessage());
+        }
+        return errors;
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public Map<String, String> onMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        Map<String, String> errors = new HashMap<>();
+        for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
+            errors.put(fieldError.getField() , fieldError.getDefaultMessage());
+        }
+        return errors;
+    }
+
+
+
+
+
 
     /*@GetMapping("/patient/{id}")
     Optional<Patient> ReturnPatientById(@PathVariable String id){
